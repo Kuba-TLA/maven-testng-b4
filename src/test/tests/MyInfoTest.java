@@ -50,5 +50,6 @@ public class MyInfoTest {
         driver.get("https://opensource-demo.orangehrmlive.com/index.php/auth/validateCredentials");
 
         driver.findElement(By.id("txtUsernameTest")).sendKeys("Admin");
+
     }
 }

@@ -14,7 +14,7 @@ import pages.LoginPage;
 
 import java.util.concurrent.TimeUnit;
 
-public class BaseTest {
+public class BaseTest{
     public WebDriver driver;
     LoginPage loginPage;
 
@@ -50,4 +50,5 @@ public class BaseTest {
                 driver = new InternetExplorerDriver();
         }
     }
+
 }

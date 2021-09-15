@@ -13,6 +13,7 @@ public class AdminPage extends BasePage {
     protected WebDriver driver;
 
     public AdminPage(WebDriver driver){
+        super(driver);
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }

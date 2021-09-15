@@ -35,8 +35,7 @@ public class AdminTest extends BaseTest {
     }
 
     @Test(testName = "add new Username")
-    public void test02() throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+    public void test02() {
         String username = "aaaaTestUsername13";
 
         adminPage.adminBtn.click();
@@ -44,14 +43,14 @@ public class AdminTest extends BaseTest {
         adminPage.addBtn.click();
         adminPage.addNewUser("Alice Duval", username, "Abc+123+321");
 
-        wait.until(ExpectedConditions.elementToBeClickable(adminPage.saveBtn));
+        adminPage.waitForElementClickability(adminPage.saveBtn);
         adminPage.saveBtn.click();
 
         if (adminPage.headerSystemUsers.size() < 1){
             adminPage.saveBtn.click();
         }
 
-        Thread.sleep(3000);
+        adminPage.sleep(3000);
 //        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[text()=" + username + "]")));
 
         int tableSizeBeforeDelete = adminPage.allTableRows.size();
@@ -60,7 +59,7 @@ public class AdminTest extends BaseTest {
         adminPage.deleteBtn.click();
         adminPage.confirmDeleteBtn.click();
 
-        Thread.sleep(2000);
+        adminPage.sleep(2000);
 
         List <WebElement> users1 = driver.findElements(By.xpath("//tr/td/a"));
         int tableSizeAfterDelete = users1.size();
@@ -73,10 +72,13 @@ public class AdminTest extends BaseTest {
         adminPage.adminBtn.click();
         adminPage.selectRole("Admin");
 
+        adminPage.sleep(5000);
+
         for(WebElement role: adminPage.allRoles){
             if (!role.getText().equals("Admin")){
                 Assert.fail();
             }
         }
+
     }
 }
