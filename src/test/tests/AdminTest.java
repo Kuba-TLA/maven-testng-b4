@@ -26,20 +26,12 @@ public class AdminTest extends BaseTest {
 
     @Test(description = "Verify new nationality is added to the table", groups = {"smokeTest", "regression"})
     public void test01(){
-        adminPage.highlightElement(adminPage.adminBtn);
-        adminPage.adminBtn.click();
-
-        adminPage.highlightElement(adminPage.nationalityBtn);
-        adminPage.nationalityBtn.click();
-
-        adminPage.highlightElement(adminPage.addBtn);
-        adminPage.addBtn.click();
-
-        adminPage.highlightElement(adminPage.addNationalityInput);
-        adminPage.addNationalityInput.sendKeys("aaaaTestNationality");
-
-        adminPage.highlightElement(adminPage.saveBtn);
-        adminPage.saveBtn.click();
+        adminPage.click(adminPage.adminBtn);
+        System.out.println(adminPage.getText(driver.findElement(By.xpath("//h1"))));
+        adminPage.click(adminPage.nationalityBtn);
+        adminPage.click(adminPage.addBtn);
+        adminPage.sendKeys(adminPage.addNationalityInput, "aaaaTestNationality");
+        adminPage.click(adminPage.saveBtn);
 
         Assert.assertTrue(driver.findElement(By.xpath("//*[text()='some people']")) != null);
     }
@@ -48,13 +40,13 @@ public class AdminTest extends BaseTest {
     public void test02() {
         String username = "aaaaTestUsername13";
 
-        adminPage.adminBtn.click();
-        adminPage.userMgtBtn.click();
-        adminPage.addBtn.click();
+        adminPage.click(adminPage.adminBtn);
+        adminPage.click(adminPage.userMgtBtn);
+        adminPage.click(adminPage.addBtn);
+
         adminPage.addNewUser("Alice Duval", username, "Abc+123+321");
 
-        adminPage.waitForElementClickability(adminPage.saveBtn);
-        adminPage.saveBtn.click();
+        adminPage.click(adminPage.saveBtn);
 
         if (adminPage.headerSystemUsers.size() < 1){
             adminPage.saveBtn.click();
@@ -65,9 +57,9 @@ public class AdminTest extends BaseTest {
         adminPage.waitForElementClickability(driver.findElement((By.xpath("//*[text()=" + username + "]"))));
         int tableSizeBeforeDelete = adminPage.allTableRows.size();
 
-        adminPage.userCheckbox.click();
-        adminPage.deleteBtn.click();
-        adminPage.confirmDeleteBtn.click();
+        adminPage.click(adminPage.userCheckbox);
+        adminPage.click(adminPage.deleteBtn);
+        adminPage.click(adminPage.confirmDeleteBtn);
 
         adminPage.sleep(2000);
 

@@ -9,11 +9,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BasePage {
     private WebDriver driver;
-    private WebDriverWait wait;
 
     public BasePage(WebDriver driver){
         this.driver = driver;
-        new WebDriverWait(driver, 10);
         PageFactory.initElements(driver, this);
     }
 
@@ -25,11 +23,34 @@ public class BasePage {
         }
     }
 
+    public void click(WebElement element){
+        moveIntoView(element);
+        highlightElement(element);
+        waitForElementClickability(element);
+        element.click();
+    }
+
+    public void sendKeys(WebElement element, String inputText){
+        moveIntoView(element);
+        highlightElement(element);
+        waitForElementVisibility(element);
+        element.sendKeys(inputText);
+    }
+
+    public String getText(WebElement element){
+        moveIntoView(element);
+        highlightElement(element);
+        waitForElementVisibility(element);
+         return element.getText();
+    }
+
     public void waitForElementClickability(WebElement element){
+        WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
     public void waitForElementVisibility(WebElement element){
+        WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
