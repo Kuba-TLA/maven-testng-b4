@@ -23,7 +23,6 @@ public class AdminTest extends BaseTest {
         adminPage = new AdminPage(driver);
     }
 
-
     @Test(description = "Verify new nationality is added to the table", groups = {"smokeTest", "regression"})
     public void test01(){
         adminPage.click(adminPage.adminBtn);

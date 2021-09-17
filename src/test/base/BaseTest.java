@@ -8,26 +8,26 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
 import pages.LoginPage;
+import utils.ConfigReader;
 
 import java.util.concurrent.TimeUnit;
 
 public class BaseTest{
     public WebDriver driver;
     LoginPage loginPage;
+    String configFilePath = "src/test/data/config/config.properties";
 
     @BeforeMethod(groups = "smokeTest")
-    @Parameters({"username", "password"})
-    public void SetUp(@Optional("Admin") String username, @Optional("admin123") String password){
-        initializeDriver("chrome");
+    public void SetUp(){
+        initializeDriver(ConfigReader.readProperty(configFilePath, "browser"));
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
-        driver.get("https://opensource-demo.orangehrmlive.com/index.php/pim/viewMyDetails");
+        driver.get(ConfigReader.readProperty(configFilePath, "url"));
         loginPage = new LoginPage(driver);
-        loginPage.logIn(username, password);
+        loginPage.logIn(ConfigReader.readProperty(configFilePath,"username"),
+                ConfigReader.readProperty(configFilePath, "password"));
     }
 
     @AfterMethod(groups = "smokeTest")
