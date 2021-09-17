@@ -26,11 +26,21 @@ public class AdminTest extends BaseTest {
 
     @Test(description = "Verify new nationality is added to the table", groups = {"smokeTest", "regression"})
     public void test01(){
+        adminPage.highlightElement(adminPage.adminBtn);
         adminPage.adminBtn.click();
+
+        adminPage.highlightElement(adminPage.nationalityBtn);
         adminPage.nationalityBtn.click();
+
+        adminPage.highlightElement(adminPage.addBtn);
         adminPage.addBtn.click();
+
+        adminPage.highlightElement(adminPage.addNationalityInput);
         adminPage.addNationalityInput.sendKeys("aaaaTestNationality");
+
+        adminPage.highlightElement(adminPage.saveBtn);
         adminPage.saveBtn.click();
+
         Assert.assertTrue(driver.findElement(By.xpath("//*[text()='some people']")) != null);
     }
 
@@ -52,7 +62,7 @@ public class AdminTest extends BaseTest {
 
         adminPage.sleep(3000);
 //        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[text()=" + username + "]")));
-
+        adminPage.waitForElementClickability(driver.findElement((By.xpath("//*[text()=" + username + "]"))));
         int tableSizeBeforeDelete = adminPage.allTableRows.size();
 
         adminPage.userCheckbox.click();
