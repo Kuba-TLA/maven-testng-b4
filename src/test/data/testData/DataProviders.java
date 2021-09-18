@@ -17,15 +17,13 @@ public class DataProviders {
         list.add("Immigration");
         list.add("Job");
         list.add("Salary");
-        list.add("Tax Exemptions");
+//        list.add("Tax Exemptions");
         list.add("Report-to");
         list.add("Qualifications");
         list.add("Memberships");
         //======================================================
-        Object[][] data = new Object[1][3];
-        data[0][0] = "Admin";
-        data[0][1] = "admin123";
-        data[0][2] = list;
+        Object[][] data = new Object[1][1];
+        data[0][0] = list;
 
         return data;
     }

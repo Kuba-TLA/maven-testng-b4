@@ -1,5 +1,9 @@
 package tests;
 
+import base.BaseTest;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -7,40 +11,57 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import data.testData.DataProviders;
-import pages.LoginPage;
+import org.yaml.snakeyaml.error.Mark;
+import pages.MyInfoPage;
+import utils.Screenshot;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-public class MyInfoTest {
+public class MyInfoTest extends BaseTest {
+    MyInfoPage page;
+
+    @BeforeMethod
+    public void setUp(){
+        page = new MyInfoPage(driver);
+    }
 
     @Test(testName = "Orange HRM Info", dataProviderClass = DataProviders.class, dataProvider = "userInfo", groups = "smokeTest")
-    public void orangeTest01(String uName, String pWord, List expectPanels){
-        System.setProperty("webdriver.chrome.driver", "E:\\_SCHOOL\\_Selenium\\Batch-4\\drivers\\chromedriver.exe");
-        WebDriver driver = new ChromeDriver();
-
-        driver.get("https://opensource-demo.orangehrmlive.com/index.php/auth/validateCredentials");
-
-        // login to the website
-        driver.findElement(By.id("txtUsername")).sendKeys(uName);
-        driver.findElement(By.id("txtPassword")).sendKeys(pWord);
-        driver.findElement(By.id("btnLogin")).click();
+    public void orangeTest01(ArrayList<String> expectPanels){
+        extentTest.assignAuthor("Kuba");
+        extentTest.assignCategory("smoke");
+        extentTest.assignDevice("Windows PC");
 
         // go to my info page
-        driver.findElement(By.id("menu_pim_viewMyDetails")).click();
+        page.click(page.myInfoNavBtn);
+        extentTest.info("Navigated to My Info Page");
+        extentTest.info("My Info Page",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(Screenshot.takeScreenshot(driver)).build());
 
         // create list of actual panel details from WebElements
-        List<WebElement> actPanels = driver.findElements(By.xpath("//ul[@id='sidenav']/li/a"));
+        List<WebElement> actPanels = page.leftNavOptions;
+        List<String> actualPanelsForLog = new ArrayList<>();
+        for(WebElement each: actPanels){
+            actualPanelsForLog.add(each.getText());
+        }
 
+        extentTest.info("captured actual list of nave buttons on the left panel");
+        extentTest.info(MarkupHelper.createUnorderedList(actualPanelsForLog));
+
+        //comparing
         for (int i = 0; i < expectPanels.size(); i++) {
             Assert.assertEquals(actPanels.get(i).getText(), expectPanels.get(i));
         }
 
-        driver.close();
+        String[][] data = new String[2][1];
+        data[0][0] = actualPanelsForLog.toString();
+        data[1][0] = expectPanels.toString();
+
+        extentTest.pass(MarkupHelper.createTable(data));
+
+
     }
 
     @Test(expectedExceptions = NoSuchElementException.class)

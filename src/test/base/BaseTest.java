@@ -2,6 +2,7 @@ package base;
 
 
 import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -21,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 public class BaseTest {
     public WebDriver driver;
     protected ExtentReports extentReports;
+    protected ExtentTest extentTest;
     LoginPage loginPage;
     String configFilePath = "src/test/data/config/config.properties";
 
@@ -29,6 +31,8 @@ public class BaseTest {
         initializeDriver(ConfigReader.readProperty(configFilePath, "browser"));
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
+        extentTest = extentReports.createTest("Verify New User Test");
 
         driver.get(ConfigReader.readProperty(configFilePath, "url"));
         loginPage = new LoginPage(driver);

@@ -19,16 +19,15 @@ public class reportExample extends BaseTest {
     @Test
     public void test1(){
         //Test case 1
-        ExtentTest extentTest1 = extentReports.createTest("Verify New User Test");
-        extentTest1.assignAuthor("Kuba");
-        extentTest1.assignCategory("smoke");
-        extentTest1.assignDevice("Windows PC");
+        ExtentTest extentTest = extentReports.createTest("Verify New User Test");
+        extentTest.assignAuthor("Kuba");
+        extentTest.assignCategory("smoke");
+        extentTest.assignDevice("Windows PC");
 
-        extentTest1.pass("Test PASS marker");
+        extentTest.pass("Test PASS marker");
 
         driver.get("https://google.com");
-        Screenshot.takeScreenshot(driver);
-        extentTest1.info("Google page",
+        extentTest.info("Google page",
                 MediaEntityBuilder.createScreenCaptureFromBase64String(Screenshot.takeScreenshot(driver)).build());
 
     }
