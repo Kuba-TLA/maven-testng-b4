@@ -80,6 +80,5 @@ public class AdminTest extends BaseTest {
                 Assert.fail();
             }
         }
-
     }
 }

@@ -37,7 +37,7 @@ public class MyInfoTest {
         List<WebElement> actPanels = driver.findElements(By.xpath("//ul[@id='sidenav']/li/a"));
 
         for (int i = 0; i < expectPanels.size(); i++) {
-            Assert.assertEquals(actPanels.get(i).getText().toString(), expectPanels.get(i));
+            Assert.assertEquals(actPanels.get(i).getText(), expectPanels.get(i));
         }
 
         driver.close();
