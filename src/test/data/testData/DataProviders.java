@@ -17,7 +17,7 @@ public class DataProviders {
         list.add("Immigration");
         list.add("Job");
         list.add("Salary");
-//        list.add("Tax Exemptions");
+        list.add("Tax Exemptions");
         list.add("Report-to");
         list.add("Qualifications");
         list.add("Memberships");

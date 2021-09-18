@@ -18,6 +18,7 @@ import pages.MyInfoPage;
 import utils.Screenshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MyInfoTest extends BaseTest {
@@ -28,10 +29,9 @@ public class MyInfoTest extends BaseTest {
         page = new MyInfoPage(driver);
     }
 
-    @Test(testName = "Orange HRM Info", dataProviderClass = DataProviders.class, dataProvider = "userInfo", groups = "smokeTest")
+    @Test(testName = "Orange HRM Info", dataProviderClass = DataProviders.class, dataProvider = "userInfo", groups = {"regression"})
     public void orangeTest01(ArrayList<String> expectPanels){
         extentTest.assignAuthor("Kuba");
-        extentTest.assignCategory("smoke");
         extentTest.assignDevice("Windows PC");
 
         // go to my info page
@@ -55,9 +55,14 @@ public class MyInfoTest extends BaseTest {
             Assert.assertEquals(actPanels.get(i).getText(), expectPanels.get(i));
         }
 
-        String[][] data = new String[2][1];
-        data[0][0] = actualPanelsForLog.toString();
-        data[1][0] = expectPanels.toString();
+        String[][] data = new String[actualPanelsForLog.size()][2];
+        data[0][0] = "ACTUAL";
+        data[0][1] = "EXPECTED";
+
+        for(int i = 1; i < data.length; i++){
+            data[i][0] = actualPanelsForLog.get(i);
+            data[i][1] = expectPanels.get(i);
+        }
 
         extentTest.pass(MarkupHelper.createTable(data));
 
